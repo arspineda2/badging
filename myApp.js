@@ -23,7 +23,7 @@ const createAndSavePerson = async (done) => {
     done(null, data);
   } catch (err) {
     done(err);
-  }
+  } 
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
