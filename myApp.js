@@ -1,26 +1,26 @@
-require('dns').setServers(['8.8.8.8', '8.8.4.4']);  // only needed on PCs with the DNS problem
-  require('dotenv').config();
-  const mongoose = require('mongoose');
-  mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch((err) => console.error('MongoDB connection error:', err.message));
+require('dns').setServers(['8.8.8.8', '8.8.4.4']);
 
+require('dotenv').config();
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 const personSchema = new mongoose.Schema({
   name: { type: String, required: true },
   age: Number,
   favoriteFoods: [String]
 });
 
-let Person;
-Person = mongoose.model('Person', personSchema);
+let Person = mongoose.model('Person', personSchema);
 
 const createAndSavePerson = (done) => {
   const person = new Person({
     name: "Angel",
     age: 20,
-    favoriteFoods: ["pizza", "ramen"]
+    favoriteFoods: ["Pizza", "Tacos"]
   });
-
   person.save(function(err, data) {
     if (err) return done(err);
     done(null, data);
